@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Todo } from './models/todo';
+import { OnlineOfflineService } from './services/online-offline.service';
 import { TodoService } from './services/todo.service';
 
 @Component({
@@ -14,7 +15,10 @@ export class AppComponent implements OnInit {
 
   todos: Todo[] = [];
 
-  constructor(private readonly todoService: TodoService) {
+  constructor(
+    private readonly todoService: TodoService,
+    public readonly onlineOfflineService: OnlineOfflineService
+  ) {
     this.form = new FormGroup({
       value: new FormControl('', Validators.required)
     });
@@ -28,5 +32,9 @@ export class AppComponent implements OnInit {
     this.todoService.addTodo(this.form.value);
 
     this.form.reset();
+  }
+
+  markAsDone(todo: Todo) {
+    todo.done = !todo.done;
   }
 }

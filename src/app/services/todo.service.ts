@@ -6,7 +6,6 @@ import { OnlineOfflineService } from './online-offline.service';
 
 @Injectable({ providedIn: 'root' })
 export class TodoService {
-  private storeName = 'todos';
   private todos: Todo[] = [];
   private db: any;
 
@@ -21,27 +20,10 @@ export class TodoService {
       }
     });
 
-    if (window.indexedDB) {
-      console.log('IndexedDB is supported');
-    }
-
     this.db = new Dexie('MyTestDatabase');
     this.db.version(1).stores({
       todos: 'id,value,done'
     });
-    // const request = self.indexedDB.open('MyTestDatabase');
-
-    // request.onerror = event => {
-    //   console.log('[onerror]', request.error);
-    // };
-
-    // request.onupgradeneeded = event => {
-    //   // ...
-    // };
-
-    // request.onsuccess = event => {
-    //   this.db = (event.target as any).result;
-    // };
   }
 
   addTodo(todo: Todo) {

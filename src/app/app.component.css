@@ -1,0 +1,7 @@
+.inactive {
+  text-decoration: line-through;
+}
+
+.todo-item .todo-item-button {
+  margin: 5px;
+}

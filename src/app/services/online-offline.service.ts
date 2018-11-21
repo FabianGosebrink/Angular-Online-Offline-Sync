@@ -5,7 +5,7 @@ declare const window: any;
 
 @Injectable({ providedIn: 'root' })
 export class OnlineOfflineService {
-  private internalConnectionChanged: Subject<boolean> = new Subject<boolean>();
+  private internalConnectionChanged = new Subject<boolean>();
 
   get connectionChanged() {
     return this.internalConnectionChanged.asObservable();
