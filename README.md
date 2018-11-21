@@ -2,7 +2,9 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.0.1.
 
-## This project shows how to do offline/online sync with todo items
+## TL;DR
+
+This project shows how to do offline/online sync with todo items
 
 ## Development server
 
