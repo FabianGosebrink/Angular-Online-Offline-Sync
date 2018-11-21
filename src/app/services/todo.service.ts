@@ -43,8 +43,9 @@ export class TodoService {
   private addToIndexedDb(todo: Todo) {
     this.db.todos
       .add(todo)
-      .then(() => {
-        console.log('saved in DB');
+      .then(async () => {
+        const allItems: Todo[] = await this.db.todos.toArray();
+        console.log('saved in DB, DB is now', allItems);
       })
       .catch(e => {
         alert('Error: ' + (e.stack || e));
@@ -53,11 +54,9 @@ export class TodoService {
 
   private async sendItemsFromIndexedDb() {
     const allItems: Todo[] = await this.db.todos.toArray();
-    console.log(allItems);
-
     allItems.forEach((item: Todo) => {
       this.db.todos.delete(item.id).then(() => {
-        console.log(`item ${item.id} sent and deleted`);
+        console.log(`item ${item.id} sent and deleted locally`);
       });
     });
   }
