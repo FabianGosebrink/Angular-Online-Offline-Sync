@@ -10,20 +10,9 @@ export class TodoService {
   private db: any;
 
   constructor(private readonly onlineOfflineService: OnlineOfflineService) {
-    onlineOfflineService.connectionChanged.subscribe(online => {
-      if (online) {
-        console.log('went online');
-        console.log('sending all stored items');
-        this.sendItemsFromIndexedDb();
-      } else {
-        console.log('went offline, storing in indexdb');
-      }
-    });
+    this.registerToEvents(onlineOfflineService);
 
-    this.db = new Dexie('MyTestDatabase');
-    this.db.version(1).stores({
-      todos: 'id,value,done'
-    });
+    this.createDatabase();
   }
 
   addTodo(todo: Todo) {
@@ -38,6 +27,25 @@ export class TodoService {
 
   getAllTodos() {
     return this.todos;
+  }
+
+  private registerToEvents(onlineOfflineService: OnlineOfflineService) {
+    onlineOfflineService.connectionChanged.subscribe(online => {
+      if (online) {
+        console.log('went online');
+        console.log('sending all stored items');
+        this.sendItemsFromIndexedDb();
+      } else {
+        console.log('went offline, storing in indexdb');
+      }
+    });
+  }
+
+  private createDatabase() {
+    this.db = new Dexie('MyTestDatabase');
+    this.db.version(1).stores({
+      todos: 'id,value,done'
+    });
   }
 
   private addToIndexedDb(todo: Todo) {
